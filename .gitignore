@@ -8,5 +8,5 @@ yarn.lock
 .vscode/launch.json
 
 # IDEs
-.vscode
-.idea
+.vscode/
+.idea/
