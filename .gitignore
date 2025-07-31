@@ -10,3 +10,5 @@ yarn.lock
 # IDEs
 .vscode/
 .idea/
+
+*.iml
