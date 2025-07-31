@@ -9,6 +9,7 @@ import {
 import {Readability} from '@mozilla/readability';
 import * as cheerio from 'cheerio';
 import {JSDOM} from 'jsdom';
+import turndown from 'turndown'
 
 export interface ICleanOptions {
 	removeComments: boolean
@@ -344,8 +345,10 @@ export class HtmlCleaner implements INodeType {
 					}
 				}
 
+				let html = $.html().replace(/\s+/g, " ").trim()
+
 				// Create a JSDOM instance with the cleaned HTML content
-				let dom: JSDOM = new JSDOM($.html(), {
+				let dom: JSDOM = new JSDOM(html, {
 					// Use the JSDOM options to parse HTML content
 					contentType: 'text/html',
 					includeNodeLocations: true, // Include node locations for better parsing
@@ -359,7 +362,7 @@ export class HtmlCleaner implements INodeType {
 				let article: ReadabilityArticle | null = new Readability(dom.window.document, readabilityOptions).parse();
 
 				let outputContent:ICleanerOutput = {
-					html: $.html(),
+					html,
 					title: article?.title || null,
 					lang: article?.lang || null,
 					content: article?.content || null,
@@ -372,7 +375,7 @@ export class HtmlCleaner implements INodeType {
 
 				if (markdownOutput) {
 					// Convert the cleaned HTML to Markdown format
-					const turndownService = new (require('turndown'))();
+					const turndownService = new turndown();
 					outputContent.markdown = turndownService.turndown(article?.content || '');
 				}
 
@@ -381,8 +384,7 @@ export class HtmlCleaner implements INodeType {
 					json: {...outputContent},
 					pairedItem: {item: itemIndex}
 				});
-			} catch
-				(error) {
+			} catch (error) {
 				if (this.continueOnFail()) {
 					output.push({json: {error: error.message}, pairedItem: {item: itemIndex}});
 				} else {
