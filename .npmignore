@@ -1,0 +1,12 @@
+.DS_Store
+*.tsbuildinfo
+
+.vscode
+.idea
+*.log
+logs
+
+dist
+coverage
+node_modules
+build

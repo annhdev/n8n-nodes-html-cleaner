@@ -1,0 +1,70 @@
+{
+  "name": "n8n-nodes-html-cleaner",
+  "version": "0.1.0",
+  "description": "Html Cleaner Node for n8n",
+  "keywords": [
+    "n8n",
+    "n8n-nodes",
+    "n8n-community",
+    "n8n-community-nodes",
+    "n8n-community-nodes-html-cleaner",
+    "n8n-community-node-package"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/annhdev/n8n-nodes-html-cleaner.git",
+  "author": {
+    "name": "annhdev",
+    "email": "annh.dev@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/annhdev/n8n-nodes-html-cleaner.git"
+  },
+  "engines": {
+    "node": ">=20.15"
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "npx rimraf dist && tsc && gulp build:icons",
+    "dev": "tsc --watch",
+    "format": "prettier nodes --write",
+    "lint": "eslint nodes package.json",
+    "lintfix": "eslint nodes package.json --fix",
+    "prepublishOnly": "npm run build && npm run lint -c eslint.config.prepublish.js nodes package.json",
+    "publish": "npm publish"
+  },
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "nodes": [
+      "dist/nodes/HtmlCleaner/HtmlCleaner.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.32.0",
+    "@types/jsdom": "^21.1.7",
+    "@typescript-eslint/parser": "~8.38.0",
+    "eslint": "^9.32.0",
+    "eslint-plugin-n8n-nodes-base": "^1.16.3",
+    "globals": "^16.3.0",
+    "gulp": "^5.0.1",
+    "prettier": "^3.6.2",
+    "typescript": "^5.8.3"
+  },
+  "overrides": {
+    "form-data": "^4.0.4"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  },
+  "dependencies": {
+    "@mozilla/readability": "^0.6.0",
+    "cheerio": "^1.1.2",
+    "htmlparser2": "^10.0.0",
+    "jsdom": "^26.1.0",
+    "turndown": "^7.2.0"
+  }
+}
